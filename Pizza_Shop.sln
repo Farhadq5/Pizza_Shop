@@ -5,6 +5,10 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza_Shop", "Pizza_Shop.csproj", "{3842525D-25D6-4F2D-9D04-667AE69C69D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLogic", "DomainLogic\DomainLogic.csproj", "{AAB73B23-8CB8-4A00-BD97-A3AACFB59225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{DFF7BFBA-639B-45FF-B6B5-88D4BA910D62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3842525D-25D6-4F2D-9D04-667AE69C69D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3842525D-25D6-4F2D-9D04-667AE69C69D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3842525D-25D6-4F2D-9D04-667AE69C69D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB73B23-8CB8-4A00-BD97-A3AACFB59225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB73B23-8CB8-4A00-BD97-A3AACFB59225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB73B23-8CB8-4A00-BD97-A3AACFB59225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB73B23-8CB8-4A00-BD97-A3AACFB59225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF7BFBA-639B-45FF-B6B5-88D4BA910D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF7BFBA-639B-45FF-B6B5-88D4BA910D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF7BFBA-639B-45FF-B6B5-88D4BA910D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF7BFBA-639B-45FF-B6B5-88D4BA910D62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
