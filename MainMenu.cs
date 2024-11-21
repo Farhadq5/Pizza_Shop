@@ -85,10 +85,10 @@ namespace Pizza_Shop
         {
             if (currentbtn != null)
             {
-                currentbtn.BackColor = System.Drawing.Color.FromArgb(37, 36, 81);
-                currentbtn.ForeColor = System.Drawing.Color.WhiteSmoke;
+                currentbtn.BackColor = Color.FromArgb(37, 36, 81);
+                currentbtn.ForeColor = Color.WhiteSmoke;
                 currentbtn.TextAlign = ContentAlignment.MiddleLeft;
-                currentbtn.IconColor = System.Drawing.Color.WhiteSmoke;
+                currentbtn.IconColor = Color.WhiteSmoke;
                 currentbtn.TextImageRelation = TextImageRelation.TextBeforeImage;
                 currentbtn.ImageAlign = ContentAlignment.MiddleLeft;
             }
@@ -100,7 +100,7 @@ namespace Pizza_Shop
             if (currentchildform != null)
             {
                 currentchildform.Close();
-            }
+            } 
                  currentchildform = childform;
                 childform.TopLevel = false;
                 childform.FormBorderStyle = FormBorderStyle.None;
@@ -120,7 +120,7 @@ namespace Pizza_Shop
             // fix the role no this is test only
             switch (userRole) 
             {
-                case 2:
+                case 4:
                     //its for admin menu
                     break;
                 case 3:
@@ -130,14 +130,16 @@ namespace Pizza_Shop
                     btnmanageemployess.Visible = false;
                     btnreports.Visible = false;
                     btnmanageorders.Visible = false;
+                    btnsetting.Visible = false;
                     lblposition.Text = "Delevery workwr";
                     lblfname.Text = empinfo[0+1];
                     break;
-                case 4:
-                    //for Employee menu
-                    btnmanageemployess.Visible=false;
+                case 1:
+                    //for admin menu
+                   // btnmanageemployess.Visible=false;
                     btnreports.Visible = false;
                     btnmanageoizzamenu.Visible = false;
+                    //btnsetting.Visible = false;
                     break;
                 case 5:
                     CustomerService customerservice = new CustomerService();
@@ -146,6 +148,7 @@ namespace Pizza_Shop
                     btnmanageemployess.Visible = false;
                     btnreports.Visible = false;
                     btnmanageoizzamenu.Visible = false;
+                    btnreports.Visible = false;
 
                     label2.Text = "Loyalty";
                     lblfname.Text = custinfo[0 + 1];
@@ -159,8 +162,9 @@ namespace Pizza_Shop
            
         }
         private void btndashboard_Click(object sender, EventArgs e)
-        {
-            
+        {      
+            ActivateButton(sender, RGBcolors.color1);
+            Openchildeform(new DashBoard());
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -194,6 +198,12 @@ namespace Pizza_Shop
         {
             ActivateButton(sender, RGBcolors.color1);
             Openchildeform(new ManageEmployees());
+        }
+
+        private void btnsetting_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender,RGBcolors.color2);
+            Openchildeform(new sethings(userid));
         }
     }
 }

@@ -259,6 +259,7 @@
             this.btnsetting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnsetting.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnsetting.UseVisualStyleBackColor = true;
+            this.btnsetting.Click += new System.EventHandler(this.btnsetting_Click);
             // 
             // btnmanageemployess
             // 

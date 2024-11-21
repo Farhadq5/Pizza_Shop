@@ -15,7 +15,7 @@ namespace Pizza_Shop
         UserService userService = new UserService();
         
 
-        private int loyalty = 45;
+        private int loyalty = 0;
         private int userId;
         private string Username;
         private CustomerService customerService = new CustomerService();
