@@ -69,11 +69,22 @@ namespace Pizza_Shop
                         mainMenu.Show();
                         this.Hide();
                     }
-                    else if (role == 4)
+                    else if (role == 1)
                     {
-                        MainMenu mainmenu = new MainMenu(userid, role);
-                        mainmenu.Show();
-                        this.Hide();
+                        if (employeeservice.isfirstlogin(userid))
+                        {
+                            //go to the employee info form
+                            EmployeeInfo emp = new EmployeeInfo(userid, role);
+                            emp.Show();
+                            this.Hide();
+                            //send the userid to form too
+                        }
+                        else
+                        {
+                            MainMenu mainMenu = new MainMenu(userid, role);
+                            mainMenu.Show();
+                            this.Hide();
+                        }
                     }
                     else
                     {
