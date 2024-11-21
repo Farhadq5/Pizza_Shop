@@ -12,7 +12,7 @@ namespace DataAccess
        private readonly string ConnectionString;
         public ConnectionToSql()
         {
-            ConnectionString = "Server=78.160.247.233,49170;Database=pizzashopDb;User Id=farhad;Password=ff;TrustServerCertificate=True;Connect Timeout=30;Encrypt=False;Max Pool Size=100;;";
+            ConnectionString = "your connection string here";
 
         }
 
