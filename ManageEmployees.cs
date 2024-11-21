@@ -14,8 +14,8 @@ namespace Pizza_Shop
     public partial class ManageEmployees : Form
     {
         public int userid { get; set; }
-        UserService userService;
         private string id = "";
+        UserService userService;
         private bool Edit;
         
         public ManageEmployees()
@@ -27,27 +27,26 @@ namespace Pizza_Shop
         private void ManageEmployees_Load(object sender, EventArgs e)
         {
             hidetextbox();
-           
+            datatable();
         }
         private void hidetextbox()
         {
-            txtupmail.Visible = false;
-            txtupfirstname.Visible = false;
-            txtuplastname.Visible = false;
-            txtuppass.Visible = false;
-            txtupposition.Visible = false;
-            txtupusername.Visible = false;
-            label8.Visible = false;
-            label9.Visible = false;
-            label10.Visible = false;
-            label11.Visible = false;
-            label12.Visible = false;
+            
             label13.Visible = false;
             iconbtnsave.Visible = false;
+            comboBox1.Visible = false;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void datatable()
+        {
+
+            dataGridView2.DataSource = userService.datatable();
+            dataGridView3.DataSource = userService.datatable();
 
         }
 
@@ -85,6 +84,7 @@ namespace Pizza_Shop
 
                 userService.adminadduser(username, password, roleid, userid2);
                 cleartextboxes();
+                datatable();
             }
             catch (Exception)
             {
@@ -98,6 +98,108 @@ namespace Pizza_Shop
             txtusername.Clear();
             txtpass.Clear();
             comboBox2.Items.Clear();
+        }
+
+        private void iconbtnsave_Click(object sender, EventArgs e)
+        {
+            if(Edit == true) 
+            {
+                try
+                {
+                    int combrole = 0;
+                    string rolename = dataGridView3.CurrentRow.Cells["role_name"].Value.ToString();
+                    comboBox1.SelectedItem = rolename;
+                    switch (comboBox1.SelectedItem)
+                    {
+                        case "Delevery worker":
+                            combrole = 3;
+                            break;
+                        case "manneger":
+                            combrole = 1;
+                            break;
+                        default: combrole = 3; 
+                            break;
+                    }
+
+                    userService.edituser(Convert.ToInt32(id),combrole);
+                    datatable();
+                    hidetextbox();
+                   Edit = false;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+        }
+
+        private void iconbtnupdate_Click(object sender, EventArgs e)
+        {
+            id = dataGridView3.CurrentRow.Cells["user_id"].Value.ToString();
+            int userid =Convert.ToInt32(id);
+            if (userid < 0)
+            {
+
+                label13.Visible = false;
+                comboBox1.Visible = false;
+
+            }
+            else
+            {
+
+                label13.Visible = true;
+                iconbtnsave.Visible = true;
+                comboBox1.Visible = true;
+
+                iconbtnsave.Visible = true;
+                Edit = true;
+                datatable();
+            }
+           
+        }
+
+        private void iconbtndelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult reasult = MessageBox.Show("Are you sure you want to delete user?", "warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2);
+
+                if (reasult == DialogResult.Yes)
+                {
+                    int selectedindex = dataGridView3.CurrentCell.RowIndex;
+
+                    dataGridView2.DataSource = userService.datatable();
+                    dataGridView3.DataSource = userService.datatable();
+                    id = dataGridView3.CurrentRow.Cells["user_id"].Value.ToString();
+                    userService.deleteuser(Convert.ToInt32(id));
+                    dataGridView3.Rows.RemoveAt(selectedindex);
+                    datatable();
+                }
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("User not deleted. Please try again.");
+            }
+        }
+
+        private void btnDisableUser_Click(object sender, EventArgs e)
+        {
+            if(btnDisableUser.Text == "Disable Employees") 
+            {
+                dataGridView3.DataSource = userService.disableuserdatatavle();
+                btnDisableUser.Text = "Active Employees";
+            }
+            else if(btnDisableUser.Text =="Active Employees")
+            {
+                dataGridView3.DataSource = userService.datatable();
+                btnDisableUser.Text = "Disable Employees";
+            }
+
+            
         }
     }
 }

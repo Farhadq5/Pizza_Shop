@@ -17,6 +17,16 @@ namespace DomainLogic
             customerdao.CreateCustomer(userId ,Firstname, Lastname, Email, Phone, City, Birtdate, loyalty);
         }
 
+        public void Updatecustomer(int userId,string Firstname ,string Lastname, string Email,string phone,string city,string Birtdate)
+        {
+            customerdao.UpdateCustomer(userId, Firstname, Lastname, Email, phone, city, Birtdate);
+        }
+
+        public void deletecustomer(int userid)
+        {
+            customerdao.deleteuser(userid);
+        }
+
         public string[] GetCustomerInfo(int userId)
         {
             if (userId <= 0)
@@ -26,10 +36,16 @@ namespace DomainLogic
 
             // Use your data access class to retrieve customer information
             customserinfo info = customerdao.GetUserByUserid(userId);
-
-            if (info == null)
+            try
             {
-                throw new Exception("Customer not found.");
+                if (info == null)
+                {
+                    throw new Exception("Customer not found.");
+                }
+            }
+            catch (Exception)
+            {
+                throw; 
             }
 
             // Create a formatted string with the customer's details

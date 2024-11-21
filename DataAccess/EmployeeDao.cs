@@ -44,7 +44,6 @@ namespace DataAccess
                     command.Parameters.AddWithValue("@Email", Email);
                     command.Parameters.AddWithValue("@roleid", roleid);
                     command.ExecuteNonQuery();
-                    connection.Close();
                 }
                 
             }
@@ -72,7 +71,6 @@ namespace DataAccess
                             };
                         }
                     }
-                    connection.Close();
                 }
                 return null;
             }

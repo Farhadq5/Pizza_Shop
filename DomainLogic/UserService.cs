@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,11 +31,46 @@ namespace DomainLogic
             return 0;  // Return null if credentials are invalid
         }
 
+        public DataTable datatable()
+        {
+            DataTable table = new DataTable();
+            table = usersdao.dataTable();
+            return table;
+        }
+        public DataTable disableuserdatatavle() 
+        {
+            DataTable dt = new DataTable();
+            dt = usersdao.disableuserdataTable();
+            return dt;
+        }
+
         public int userrole(string username)
         {
             User user = usersdao.GetUserByUsername(username);
             return user.RoleId;
         }
+
+        #region users tablea crude operations
+
+        public void deleteuser(int userid) 
+        {
+            try
+            {
+                usersdao.userdelete(userid);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void edituser(int userid,int roleid) 
+        {
+            usersdao.EditUser(userid, roleid);
+        }
+
+        #endregion
 
         public int adminadduser(string username, string password, int roleid, int creator)
         {
