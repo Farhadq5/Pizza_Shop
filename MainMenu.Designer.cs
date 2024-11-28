@@ -238,6 +238,7 @@
             this.btnreports.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnreports.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnreports.UseVisualStyleBackColor = true;
+            this.btnreports.Click += new System.EventHandler(this.btnreports_Click);
             // 
             // btnsetting
             // 
@@ -304,6 +305,7 @@
             this.btnmanageorders.Text = "Manage Orders";
             this.btnmanageorders.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnmanageorders.UseVisualStyleBackColor = true;
+            this.btnmanageorders.Click += new System.EventHandler(this.btnmanageorders_Click);
             // 
             // btnmanageoizzamenu
             // 
@@ -326,6 +328,7 @@
             this.btnmanageoizzamenu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnmanageoizzamenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnmanageoizzamenu.UseVisualStyleBackColor = true;
+            this.btnmanageoizzamenu.Click += new System.EventHandler(this.btnmanageoizzamenu_Click);
             // 
             // btndashboard
             // 

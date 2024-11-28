@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DomainLogic;
+using System;
 using System.Windows.Forms;
-using DomainLogic;
 
 namespace Pizza_Shop
 {
@@ -17,7 +10,7 @@ namespace Pizza_Shop
         private string id = "";
         UserService userService;
         private bool Edit;
-        
+
         public ManageEmployees()
         {
             userService = new UserService();
@@ -31,7 +24,7 @@ namespace Pizza_Shop
         }
         private void hidetextbox()
         {
-            
+
             label13.Visible = false;
             iconbtnsave.Visible = false;
             comboBox1.Visible = false;
@@ -62,7 +55,7 @@ namespace Pizza_Shop
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
         }
 
         private void iconButton2_Click(object sender, EventArgs e)
@@ -90,7 +83,7 @@ namespace Pizza_Shop
             {
 
                 throw;
-            }        
+            }
         }
 
         private void cleartextboxes()
@@ -102,7 +95,7 @@ namespace Pizza_Shop
 
         private void iconbtnsave_Click(object sender, EventArgs e)
         {
-            if(Edit == true) 
+            if (Edit == true)
             {
                 try
                 {
@@ -117,14 +110,15 @@ namespace Pizza_Shop
                         case "manneger":
                             combrole = 1;
                             break;
-                        default: combrole = 3; 
+                        default:
+                            combrole = 3;
                             break;
                     }
 
-                    userService.edituser(Convert.ToInt32(id),combrole);
+                    userService.edituser(Convert.ToInt32(id), combrole);
                     datatable();
                     hidetextbox();
-                   Edit = false;
+                    Edit = false;
                 }
                 catch (Exception)
                 {
@@ -138,7 +132,7 @@ namespace Pizza_Shop
         private void iconbtnupdate_Click(object sender, EventArgs e)
         {
             id = dataGridView3.CurrentRow.Cells["user_id"].Value.ToString();
-            int userid =Convert.ToInt32(id);
+            int userid = Convert.ToInt32(id);
             if (userid < 0)
             {
 
@@ -157,7 +151,7 @@ namespace Pizza_Shop
                 Edit = true;
                 datatable();
             }
-           
+
         }
 
         private void iconbtndelete_Click(object sender, EventArgs e)
@@ -188,18 +182,18 @@ namespace Pizza_Shop
 
         private void btnDisableUser_Click(object sender, EventArgs e)
         {
-            if(btnDisableUser.Text == "Disable Employees") 
+            if (btnDisableUser.Text == "Disable Employees")
             {
                 dataGridView3.DataSource = userService.disableuserdatatavle();
                 btnDisableUser.Text = "Active Employees";
             }
-            else if(btnDisableUser.Text =="Active Employees")
+            else if (btnDisableUser.Text == "Active Employees")
             {
                 dataGridView3.DataSource = userService.datatable();
                 btnDisableUser.Text = "Disable Employees";
             }
 
-            
+
         }
     }
 }

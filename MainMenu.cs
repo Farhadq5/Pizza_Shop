@@ -1,17 +1,8 @@
-﻿using FontAwesome.Sharp;
+﻿using DomainLogic;
+using FontAwesome.Sharp;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DomainLogic;
 
 namespace Pizza_Shop
 {
@@ -20,7 +11,7 @@ namespace Pizza_Shop
         //public string firsname { get; set; }
         //public string lastname { get; set; }
         //public int loyalty { get; set; }
-
+        EmployeeService employeeService = new EmployeeService();
         // Fields
         private IconButton currentbtn;
         private Panel leftmainmenupanel;
@@ -28,7 +19,7 @@ namespace Pizza_Shop
         public string time;
         private int userRole; // Field to store the user's role
         private int userid;
-        public MainMenu(int Userid,int Role)
+        public MainMenu(int Userid, int Role)
         {
             InitializeComponent();
             leftmainmenupanel = new Panel();
@@ -40,7 +31,7 @@ namespace Pizza_Shop
             userid = Userid;
             //from
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            
+
 
         }
 
@@ -63,7 +54,7 @@ namespace Pizza_Shop
                 Disablebutton();
                 //button
                 currentbtn = (IconButton)senderbtn;
-                currentbtn.BackColor = System.Drawing.Color.FromArgb(31, 30, 68);
+                currentbtn.BackColor = Color.FromArgb(31, 30, 68);
                 currentbtn.ForeColor = color;
                 currentbtn.TextAlign = ContentAlignment.MiddleCenter;
                 currentbtn.IconColor = color;
@@ -100,51 +91,54 @@ namespace Pizza_Shop
             if (currentchildform != null)
             {
                 currentchildform.Close();
-            } 
-                 currentchildform = childform;
-                childform.TopLevel = false;
-                childform.FormBorderStyle = FormBorderStyle.None;
-                childform.Dock = DockStyle.Fill;
-                mainmenupanel.Controls.Add(childform);
-                mainmenupanel.Tag = childform;
-                childform.BringToFront();
-                childform.Show();
-                lbltitlechildform.Text = childform.Text;
-                 
-            
+            }
+            currentchildform = childform;
+            childform.TopLevel = false;
+            childform.FormBorderStyle = FormBorderStyle.None;
+            childform.Dock = DockStyle.Fill;
+            mainmenupanel.Controls.Add(childform);
+            mainmenupanel.Tag = childform;
+            childform.BringToFront();
+            childform.Show();
+            lbltitlechildform.Text = childform.Text;
+
+
         }
-        
+
         // user role based logic
         private void visibitybyrole()
         {
             // fix the role no this is test only
-            switch (userRole) 
+            switch (userRole)
             {
                 case 4:
-                    //its for admin menu
+                    lblfname.Text = "Admin";
+                    lblposition.Text = "Admin";
                     break;
                 case 3:
                     //for delevery menu
-                    EmployeeService employeeService = new EmployeeService();
                     string[] empinfo = employeeService.employeedata(userid);
                     btnmanageemployess.Visible = false;
                     btnreports.Visible = false;
                     btnmanageorders.Visible = false;
                     btnsetting.Visible = false;
                     lblposition.Text = "Delevery workwr";
-                    lblfname.Text = empinfo[0+1];
+                    lblfname.Text = empinfo[0 + 1];
                     break;
                 case 1:
-                    //for admin menu
-                   // btnmanageemployess.Visible=false;
-                    btnreports.Visible = false;
-                    btnmanageoizzamenu.Visible = false;
-                    //btnsetting.Visible = false;
+                    //for manneger menu
+                   
+                    string[] empinfo2 = employeeService.employeedata(userid);
+                    //btnreports.Visible = false;
+                    btnsetting.Visible = false;
+                    lblposition.Text = "Manneger";
+                    lblfname.Text = empinfo2[0 + 1];
                     break;
                 case 5:
                     CustomerService customerservice = new CustomerService();
                     string[] custinfo = customerservice.GetCustomerInfo(userid);
                     //for customer menu
+                    btnmanageorders.Text = "My Orders";
                     btnmanageemployess.Visible = false;
                     btnreports.Visible = false;
                     btnmanageoizzamenu.Visible = false;
@@ -154,17 +148,17 @@ namespace Pizza_Shop
                     lblfname.Text = custinfo[0 + 1];
                     lblposition.Text = custinfo[2];
                     //and more
-                    break ;
+                    break;
                 default: break;
-                
+
             }
 
-           
+
         }
         private void btndashboard_Click(object sender, EventArgs e)
-        {      
+        {
             ActivateButton(sender, RGBcolors.color1);
-            Openchildeform(new DashBoard());
+            Openchildeform(new DashBoard(userid, userRole));
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -189,9 +183,9 @@ namespace Pizza_Shop
         }
         public void SetCustomerInfo(string firstname, string lastname, int loyaltyPoints)
         {
-            
+
             // Set the values in the Main Menu, e.g., in labels or text boxes
-           
+
         }
 
         private void btnmanageemployess_Click(object sender, EventArgs e)
@@ -202,8 +196,26 @@ namespace Pizza_Shop
 
         private void btnsetting_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender,RGBcolors.color2);
+            ActivateButton(sender, RGBcolors.color2);
             Openchildeform(new sethings(userid));
+        }
+
+        private void btnmanageorders_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBcolors.color1);
+            Openchildeform(new ManageOrders(userRole,userid));
+        }
+
+        private void btnmanageoizzamenu_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBcolors.color1);
+            Openchildeform(new ManagePizzaMenu());
+        }
+
+        private void btnreports_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender,RGBcolors.color1);
+            Openchildeform(new Report());
         }
     }
 }

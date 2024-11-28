@@ -50,15 +50,21 @@ namespace Pizza_Shop
                             //go to the employee info form
                             EmployeeInfo emp = new EmployeeInfo(userid,role);                          
                             emp.Show();
-                            this.Hide();
+                            Hide();
                             //send the userid to form too
                         }
                         else
                         {
                             MainMenu mainMenu = new MainMenu(userid, role);
                             mainMenu.Show();
-                            this.Hide();
+                            Hide();
                         }
+                    }
+                    else if (role == 4)
+                    {
+                        MainMenu mainMenu = new MainMenu(userid, role);
+                        mainMenu.Show();
+                        Hide();
                     }
                     else if (role == 5)
                     {
@@ -67,7 +73,7 @@ namespace Pizza_Shop
                         //customerservice.GetCustomerInfo(userid);
                         MainMenu mainMenu = new MainMenu(userid, role);
                         mainMenu.Show();
-                        this.Hide();
+                        Hide();
                     }
                     else if (role == 1)
                     {
@@ -76,14 +82,14 @@ namespace Pizza_Shop
                             //go to the employee info form
                             EmployeeInfo emp = new EmployeeInfo(userid, role);
                             emp.Show();
-                            this.Hide();
+                            Hide();
                             //send the userid to form too
                         }
                         else
                         {
                             MainMenu mainMenu = new MainMenu(userid, role);
                             mainMenu.Show();
-                            this.Hide();
+                            Hide();
                         }
                     }
                     else
