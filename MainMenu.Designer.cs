@@ -50,6 +50,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
+            this.iconButton1 = new FontAwesome.Sharp.IconButton();
             this.mainpanel.SuspendLayout();
             this.paneltitlebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -183,6 +184,7 @@
             // panelmenu
             // 
             this.panelmenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
+            this.panelmenu.Controls.Add(this.iconButton1);
             this.panelmenu.Controls.Add(this.btnlogout);
             this.panelmenu.Controls.Add(this.btnreports);
             this.panelmenu.Controls.Add(this.btnsetting);
@@ -228,7 +230,7 @@
             this.btnreports.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnreports.IconSize = 35;
             this.btnreports.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnreports.Location = new System.Drawing.Point(0, 319);
+            this.btnreports.Location = new System.Drawing.Point(0, 369);
             this.btnreports.Margin = new System.Windows.Forms.Padding(2);
             this.btnreports.Name = "btnreports";
             this.btnreports.Padding = new System.Windows.Forms.Padding(5, 0, 10, 0);
@@ -242,6 +244,7 @@
             // 
             // btnsetting
             // 
+            this.btnsetting.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnsetting.FlatAppearance.BorderSize = 0;
             this.btnsetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnsetting.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -250,7 +253,7 @@
             this.btnsetting.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnsetting.IconSize = 35;
             this.btnsetting.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnsetting.Location = new System.Drawing.Point(0, 373);
+            this.btnsetting.Location = new System.Drawing.Point(0, 319);
             this.btnsetting.Margin = new System.Windows.Forms.Padding(2);
             this.btnsetting.Name = "btnsetting";
             this.btnsetting.Padding = new System.Windows.Forms.Padding(5, 0, 10, 0);
@@ -390,6 +393,29 @@
             this.iconPictureBox2.TabIndex = 1;
             this.iconPictureBox2.TabStop = false;
             // 
+            // iconButton1
+            // 
+            this.iconButton1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.iconButton1.FlatAppearance.BorderSize = 0;
+            this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.iconButton1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.Cog;
+            this.iconButton1.IconColor = System.Drawing.Color.SeaShell;
+            this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconButton1.IconSize = 35;
+            this.iconButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.iconButton1.Location = new System.Drawing.Point(0, 423);
+            this.iconButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.iconButton1.Name = "iconButton1";
+            this.iconButton1.Padding = new System.Windows.Forms.Padding(5, 0, 10, 0);
+            this.iconButton1.Size = new System.Drawing.Size(184, 50);
+            this.iconButton1.TabIndex = 8;
+            this.iconButton1.Text = "Export/Import";
+            this.iconButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.iconButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.iconButton1.UseVisualStyleBackColor = true;
+            this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,5 +461,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
         private System.Windows.Forms.Panel panel1;
+        private FontAwesome.Sharp.IconButton iconButton1;
     }
 }

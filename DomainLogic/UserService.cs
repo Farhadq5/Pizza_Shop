@@ -47,7 +47,16 @@ namespace DomainLogic
         public int userrole(string username)
         {
             User user = usersdao.GetUserByUsername(username);
-            return user.RoleId;
+            if (user != null)
+            {
+                return user.RoleId;
+            }
+            else 
+            { 
+                return 0; 
+            }
+            
+          
         }
 
         #region users tablea crude operations

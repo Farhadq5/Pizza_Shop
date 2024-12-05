@@ -476,7 +476,7 @@ namespace Pizza_Shop
                         catch (Exception)
                         {
 
-                            throw new Exception("Error Canceling order");
+                            MessageBox.Show("Error Canceling order");
                         }
                     }
                 }

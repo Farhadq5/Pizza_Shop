@@ -1,10 +1,14 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Web;
+using System.Windows.Forms;
 
 namespace DataAccess
 {
     public class ReportDoa : ConnectionToSql
     {
+        private const string NEWCON = "your connection string here;Initial Catalog=master";
+
         public DataTable showallreport()
         {
             DataTable allreport = new DataTable();
@@ -54,5 +58,103 @@ namespace DataAccess
                 }
             }
         }
+
+        public DataTable backhistory()
+        {
+            DataTable bakhistory = new DataTable();
+            using (var connection = GetConnection()) 
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = @"SELECT backupId,filepath,backupdate,performedby,IsRestore,RestoreDate FROM BackupHistory ORDER BY backupdate DESC";
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(bakhistory);
+                    return bakhistory;
+
+                }
+            }
+        }
+
+        public void databasebackup(string path, int adminid)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"BACKUP DATABASE pizzashopDb TO DISK = @path";
+
+                        command.Parameters.AddWithValue(@"path", path);
+
+                        command.ExecuteNonQuery();
+                    }
+                    using (var historycommand = connection.CreateCommand()) 
+                    {
+                        historycommand.CommandText = @"INSERT INTO BackupHistory(filepath,performedby) VALUES (@path,@adminid)";
+
+                        historycommand.Parameters.AddWithValue(@"path",path);
+                        historycommand.Parameters.AddWithValue(@"adminid",adminid);
+                        historycommand.ExecuteNonQuery();
+                    }
+                }
+                MessageBox.Show("Backup compleated successfully");
+            }
+            catch (System.Exception)
+            { 
+                MessageBox.Show("An error occurred during the backup");
+            }
+            
+        }
+
+        public void loadbackup(string path, int adminid)
+        {
+            try
+            {
+                
+                using (var connection = new SqlConnection(NEWCON))
+                {
+                    connection.Open();
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = @" ALTER DATABASE pizzashopDb SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
+                        command.ExecuteNonQuery();
+                    }
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"RESTORE DATABASE pizzashopDb FROM DISK = @path WITH REPLACE";
+                        command.Parameters.AddWithValue(@"path", path);
+                        command.ExecuteNonQuery();
+                    }
+                    using (var reastorcommand = connection.CreateCommand())
+                    {
+                        reastorcommand.CommandText = @"ALTER DATABASE pizzashopDb SET MULTI_USER";
+                        reastorcommand.ExecuteNonQuery();
+                    }
+                   
+                }
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var historyCommand = connection.CreateCommand())
+                    {
+                        historyCommand.CommandText = @"UPDATE BackupHistory SET IsRestore = 1, RestoreDate = GETDATE() WHERE filepath = @path AND IsRestore = 0;
+                          IF @@ROWCOUNT = 0 BEGIN INSERT INTO BackupHistory (filepath, backupdate, performedby, IsRestore, RestoreDate) VALUES (@path, NULL, @adminid, 1, GETDATE()); END";
+                        historyCommand.Parameters.AddWithValue("@path", path);
+                        historyCommand.Parameters.AddWithValue("@adminid", adminid);
+                        historyCommand.ExecuteNonQuery();
+                    }
+                    MessageBox.Show("Database restored successfully");
+                }
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("An error occurred during the restore");
+            }
+           
+        }
+        
     }
 }

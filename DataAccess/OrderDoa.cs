@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DataAccess
 {
@@ -96,14 +97,32 @@ namespace DataAccess
                 connection.Open();
                 using(var command = connection.CreateCommand()) 
                 {
-                    command.CommandText = @" UPDATE Orders SET Status = 'Completed', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderid AND Status = 'Pending'; 
-                      --Update the OrderItems table
-                       UPDATE OrderItems SET Status = 'Completed', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderId AND Status = 'Pending'";
+                    command.CommandText = "CompleateOrder";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    //command.CommandText = @" UPDATE Orders SET Status = 'Completed', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderid AND Status = 'Pending'; 
+                    //  --Update the OrderItems table
+                    //   UPDATE OrderItems SET Status = 'Completed', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderId AND Status = 'Pending'";
 
                     command.Parameters.AddWithValue(@"userid", userid);
                     command.Parameters.AddWithValue(@"orderid", orderid);
+                    try
+                    {
+                        int rowwsaffected = command.ExecuteNonQuery();
+                        if (rowwsaffected == 0) 
+                        {
+                            Console.WriteLine("no rows affected and updated");
+                        }
+                        else
+                        {
+                            Console.WriteLine("order hase been compleadet successfully");
+                        }
+                    }
+                    catch (Exception)
+                    {
 
-                    command.ExecuteNonQuery ();
+                        MessageBox.Show("there has been error while compleating the order please inform the admin or maeneger");
+                    }
 
                 }
             }
@@ -117,14 +136,32 @@ namespace DataAccess
                 connection.Open();
                 using( var command = connection.CreateCommand())
                 {
-                    command.CommandText = @" UPDATE Orders SET Status = 'Canceled', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderid AND Status = 'Pending';
-                      --Update the OrderItems table
-                       UPDATE OrderItems SET Status = 'Canceled', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderId AND Status = 'Pending'";
+
+                    command.CommandText = @"CancelOrder";
+                    command.CommandType= CommandType.StoredProcedure;
+
+                    //command.CommandText = @" UPDATE Orders SET Status = 'Canceled', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderid AND Status = 'Pending';
+                    //  --Update the OrderItems table
+                    //   UPDATE OrderItems SET Status = 'Canceled', CompletedBy = @userid, CompletedTime = GETDATE() WHERE OrderId = @orderId AND Status = 'Pending'";
 
                     command.Parameters.AddWithValue (@"userid", userid);
                     command.Parameters.AddWithValue(@"orderid", orderid);
-                    
-                    command.ExecuteNonQuery ();
+
+                    try
+                    {
+                        int affectedroes = command.ExecuteNonQuery();
+                        if(affectedroes == 0)
+                        {
+                            Console.WriteLine("no rows affected and updated");
+                        }
+                        else
+                            Console.WriteLine("order hase been compleadet successfully");
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("there has been error while compleating the order please inform the admin or maeneger");
+                    }
                 }
             }
         }

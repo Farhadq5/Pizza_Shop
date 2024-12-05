@@ -17,5 +17,24 @@ namespace DomainLogic
             reporttb = reportdoa.showallreport();
             return reporttb;
         }
+
+        public void backup(string path,int userid)
+        {
+            reportdoa.databasebackup(path,userid);
+        }
+
+        public DataTable backuphistory()
+        {
+            DataTable backuphistory = new DataTable();
+            backuphistory = reportdoa.backhistory();
+            return backuphistory;
+        }
+
+        public void restorbackup(string path,int userid) 
+        {
+            reportdoa.loadbackup(path,userid);
+        }
     }
+
+    
 }

@@ -122,6 +122,7 @@ namespace Pizza_Shop
                     btnreports.Visible = false;
                     btnmanageorders.Visible = false;
                     btnsetting.Visible = false;
+                    iconButton1.Visible = false;
                     lblposition.Text = "Delevery workwr";
                     lblfname.Text = empinfo[0 + 1];
                     break;
@@ -131,10 +132,12 @@ namespace Pizza_Shop
                     string[] empinfo2 = employeeService.employeedata(userid);
                     //btnreports.Visible = false;
                     btnsetting.Visible = false;
+                    iconButton1.Visible = false;
                     lblposition.Text = "Manneger";
                     lblfname.Text = empinfo2[0 + 1];
                     break;
                 case 5:
+                    // for customers
                     CustomerService customerservice = new CustomerService();
                     string[] custinfo = customerservice.GetCustomerInfo(userid);
                     //for customer menu
@@ -143,11 +146,12 @@ namespace Pizza_Shop
                     btnreports.Visible = false;
                     btnmanageoizzamenu.Visible = false;
                     btnreports.Visible = false;
+                    iconButton1.Visible = false;
 
                     label2.Text = "Loyalty";
                     lblfname.Text = custinfo[0 + 1];
                     lblposition.Text = custinfo[2];
-                    //and more
+
                     break;
                 default: break;
 
@@ -173,7 +177,9 @@ namespace Pizza_Shop
             if (MessageBox.Show("Do you want to close the application", "warning", MessageBoxButtons.YesNo,
               MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                this.Close();
+                LogInForm login = new LogInForm();
+                login.Show();
+                Hide();
             }
         }
 
@@ -216,6 +222,12 @@ namespace Pizza_Shop
         {
             ActivateButton(sender,RGBcolors.color1);
             Openchildeform(new Report());
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBcolors.color1);
+            Openchildeform(new ExportImport(userid));
         }
     }
 }
