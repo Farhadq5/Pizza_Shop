@@ -12,6 +12,8 @@ namespace Pizza_Shop
         //public string lastname { get; set; }
         //public int loyalty { get; set; }
         EmployeeService employeeService = new EmployeeService();
+
+        CustomerService customerservice = new CustomerService();
         // Fields
         private IconButton currentbtn;
         private Panel leftmainmenupanel;
@@ -32,7 +34,7 @@ namespace Pizza_Shop
             //from
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
-
+            visibitybyrole();
         }
 
         //struct
@@ -138,7 +140,7 @@ namespace Pizza_Shop
                     break;
                 case 5:
                     // for customers
-                    CustomerService customerservice = new CustomerService();
+                   
                     string[] custinfo = customerservice.GetCustomerInfo(userid);
                     //for customer menu
                     btnmanageorders.Text = "My Orders";
@@ -149,7 +151,7 @@ namespace Pizza_Shop
                     iconButton1.Visible = false;
 
                     label2.Text = "Loyalty";
-                    lblfname.Text = custinfo[0 + 1];
+                    lblfname.Text = $"{custinfo[0]} {custinfo[1]}";
                     lblposition.Text = custinfo[2];
 
                     break;

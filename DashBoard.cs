@@ -39,6 +39,12 @@ namespace Pizza_Shop
                 panelsvisibality(true);
                 panel5.Visible = false;
             }
+            else if (userrole == 4)
+            {
+                panel5.Dock = DockStyle.Fill;
+                panelsvisibality(false);
+                showdata();
+            }
             else if(UserRole == 3)
             {
                 panel5.Dock = DockStyle.Fill;

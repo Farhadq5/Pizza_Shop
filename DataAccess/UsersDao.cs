@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using BCrypt.Net;
 
 namespace DataAccess
@@ -55,10 +56,10 @@ namespace DataAccess
 
         public int CreateUser(string username, string password, int roleId, int creator)
         {
-
-            int userId = 0;
+                int userId = 0;
             if (UsernameExists(username))
             {
+                MessageBox.Show("Username already exists. Please try a new username.");
                 throw new InvalidOperationException("Username already exists. Please try a new username.");
             }
             else
@@ -90,6 +91,7 @@ namespace DataAccess
                 // Return the generated user_id
                 return userId;
             }
+           
         }
         #endregion
 

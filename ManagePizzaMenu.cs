@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DomainLogic;
+using System;
 using System.Windows.Forms;
-using DomainLogic;
 
 namespace Pizza_Shop
 {
@@ -36,7 +29,7 @@ namespace Pizza_Shop
                 if (!decimal.TryParse(txtpizzaprice.Text, out pizzaprice) || pizzaprice < 0)
                 {
                     MessageBox.Show("Please inter a valid positive number");
-                    
+
                 }
                 else
                 {
@@ -45,7 +38,7 @@ namespace Pizza_Shop
                     showdata();
                     cleartextbox();
                 }
-               
+
             }
             catch (Exception)
             {
@@ -74,13 +67,13 @@ namespace Pizza_Shop
         private void iconbtnupdate_Click(object sender, EventArgs e)
         {
             if (dataGridView3.SelectedRows.Count > 0)
-            {   
+            {
 
                 txtname.Text = dataGridView3.SelectedRows[0].Cells["pizza_name"].Value.ToString();
-                txtprice.Text =dataGridView3.SelectedRows[0].Cells["price"].Value.ToString();
+                txtprice.Text = dataGridView3.SelectedRows[0].Cells["price"].Value.ToString();
                 txtdesc.Text = dataGridView3.SelectedRows[0].Cells["description"].Value.ToString();
                 comboBox1.Text = dataGridView3.SelectedRows[0].Cells["pizza_size"].Value.ToString();
-               panel3.Visible = true;
+                panel3.Visible = true;
             }
             else
             {
@@ -95,8 +88,8 @@ namespace Pizza_Shop
 
         private void iconbtndelete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this pizza","pizza delete",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-            if (result == DialogResult.Yes) 
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this pizza", "pizza delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
                 int pizzaid = (int)dataGridView3.CurrentRow.Cells["pizza_id"].Value;
 
@@ -127,7 +120,7 @@ namespace Pizza_Shop
                 return;
             }
 
-            if (txtname.Text != name || txtdesc.Text != desc || newPrice != price )
+            if (txtname.Text != name || txtdesc.Text != desc || newPrice != price)
             {
                 pizzaservice.pizzaupdate(id, txtname.Text, txtdesc.Text, Convert.ToDecimal(txtprice.Text), size);
                 MessageBox.Show("Selected pizza has been updated");
