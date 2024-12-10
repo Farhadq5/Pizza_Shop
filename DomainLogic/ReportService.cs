@@ -18,6 +18,20 @@ namespace DomainLogic
             return reporttb;
         }
 
+        public DataTable cancelrepot()
+        {
+            DataTable reporttb = new DataTable();
+            reporttb = reportdoa.cancelreport();
+            return reporttb;
+        }
+
+        public DataTable employeesales()
+        {
+            DataTable reporttb = new DataTable();
+            reporttb = reportdoa.employeesales();
+            return reporttb;
+        }
+
         public void backup(string path,int userid)
         {
             reportdoa.databasebackup(path,userid);

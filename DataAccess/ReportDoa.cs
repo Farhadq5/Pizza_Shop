@@ -59,6 +59,45 @@ namespace DataAccess
             }
         }
 
+        public DataTable cancelreport()
+        {
+            DataTable datatable = new DataTable();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = @"canceledrepot";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(datatable);
+                    return datatable;
+                }
+
+            }
+        }
+
+        public DataTable employeesales()
+        {
+            DataTable employeesales = new DataTable();
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = @"employeesales";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(employeesales);
+                    return employeesales;
+                }
+            }
+        }
+
         public DataTable backhistory()
         {
             DataTable bakhistory = new DataTable();

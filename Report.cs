@@ -79,5 +79,15 @@ namespace Pizza_Shop
                 }
             }
         }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = repotservice.cancelrepot();
+        }
+
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = repotservice.employeesales();
+        }
     }
 }
