@@ -13,23 +13,23 @@ namespace DomainLogic
 
         public DataTable showreport()
         {
-            DataTable reporttb = new DataTable();
-            reporttb = reportdoa.showallreport();
-            return reporttb;
+            DataTable reporttbshow = new DataTable();
+            reporttbshow = reportdoa.showallreport();
+            return reporttbshow;
         }
 
         public DataTable cancelrepot()
         {
-            DataTable reporttb = new DataTable();
-            reporttb = reportdoa.cancelreport();
-            return reporttb;
+            DataTable reporttbcancel = new DataTable();
+            reporttbcancel = reportdoa.cancelreport();
+            return reporttbcancel;
         }
 
         public DataTable employeesales()
         {
-            DataTable reporttb = new DataTable();
-            reporttb = reportdoa.employeesales();
-            return reporttb;
+            DataTable reporttbemp = new DataTable();
+            reporttbemp = reportdoa.employeesales();
+            return reporttbemp;
         }
 
         public void backup(string path,int userid)

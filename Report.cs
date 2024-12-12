@@ -18,11 +18,24 @@ namespace Pizza_Shop
 
         private void Report_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = repotservice.showreport();
-            dataGridView1.AutoGenerateColumns = false;
+            showdatagrid(0);
 
         }
 
+        private void showdatagrid(int repots)
+        {
+            switch (repots) 
+            {
+                case 0: dataGridView1.DataSource = repotservice.showreport();
+                    break;
+
+                case 1: dataGridView1.DataSource = repotservice.cancelrepot();
+                    break;
+
+                case 2: dataGridView1.DataSource= repotservice.employeesales();
+                    break;
+            }
+        }
         public void ExportToExcel(DataGridView dataGridView, string filePath)
         {
             try
@@ -82,12 +95,17 @@ namespace Pizza_Shop
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = repotservice.cancelrepot();
+            showdatagrid(1);
         }
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = repotservice.employeesales();
+            showdatagrid(2);
+        }
+
+        private void iconButton4_Click(object sender, EventArgs e)
+        {
+            showdatagrid(0);
         }
     }
 }

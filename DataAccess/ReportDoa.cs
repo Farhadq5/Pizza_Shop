@@ -7,7 +7,7 @@ namespace DataAccess
 {
     public class ReportDoa : ConnectionToSql
     {
-        private const string NEWCON = " Server=95.10.198.33,49170;Database=pizzashopDb;User Id=farhad;Password=ff;TrustServerCertificate=True;Connect Timeout=30;Encrypt=False;Max Pool Size=100; ;Initial Catalog=master";
+        private const string NEWCON = "ypur connection string;Initial Catalog=master";
 
         public DataTable showallreport()
         {

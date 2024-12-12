@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using DomainLogic;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Printing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DomainLogic;
 
 namespace Pizza_Shop
 {
@@ -28,7 +21,7 @@ namespace Pizza_Shop
             orderservice = new OrderService();
             userid = UserId;
             userrole = UserRole;
-            
+
             if (UserRole == 5)
             {
                 carttable = new DataTable();
@@ -45,7 +38,7 @@ namespace Pizza_Shop
                 panelsvisibality(false);
                 showdata();
             }
-            else if(UserRole == 3)
+            else if (UserRole == 3)
             {
                 panel5.Dock = DockStyle.Fill;
                 panelsvisibality(false);
@@ -112,7 +105,7 @@ namespace Pizza_Shop
         private void pizzablocks()
         {
             // Retrieve pizza data from the service
-             pizzatb = pizzaservice.GetPizza();
+            pizzatb = pizzaservice.GetPizza();
 
             // Clear any existing blocks
             flowLayoutPanel1.Controls.Clear();
@@ -136,7 +129,7 @@ namespace Pizza_Shop
                     Size = new Size(180, 120),
                     Location = new Point(10, 10)
                 };
-             
+
                 // Label for pizza name
                 Label lblName = new Label
                 {
@@ -198,18 +191,18 @@ namespace Pizza_Shop
                 flowLayoutPanel1.Controls.Add(pizzapanel);
             }
         }
-        
-        
+
+
         private void CartBlock()
         {
             CartflowLayoutPanel.Controls.Clear();
-           
+
             foreach (DataRow row in carttable.Rows)
             {
                 //create panel for each cart item
                 Panel cartitempanel = new Panel
                 {
-                    Size = new Size(CartflowLayoutPanel.Width - 15,70),
+                    Size = new Size(CartflowLayoutPanel.Width - 15, 70),
                     //AutoSize =true,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(3)
@@ -219,7 +212,7 @@ namespace Pizza_Shop
                 {
                     Image = Image.FromFile(@"images\defualtpizza.jpg"), // Placeholder image
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    Size = new Size(63,63),
+                    Size = new Size(63, 63),
                     Location = new Point(2, 2)
                 };
 
@@ -252,9 +245,9 @@ namespace Pizza_Shop
                     Location = new Point(130, 50),
                     AutoSize = true
                 };
-                
+
                 Button btnremove = new Button
-                {   
+                {
                     Text = "remove",
                     Tag = row["PizzaID"],
                     Size = new Size(80, 30),
@@ -273,7 +266,7 @@ namespace Pizza_Shop
                 CartflowLayoutPanel.FlowDirection = FlowDirection.TopDown;
                 CartflowLayoutPanel.AutoScroll = true;
                 CartflowLayoutPanel.WrapContents = false;
-               
+
 
                 CartflowLayoutPanel.Controls.Add(cartitempanel);
             }
@@ -282,7 +275,7 @@ namespace Pizza_Shop
         private void totalprice()
         {
             decimal total = 0;
-            foreach(DataRow row in carttable.Rows)
+            foreach (DataRow row in carttable.Rows)
             {
                 total += Convert.ToDecimal(row["TotalPrice"]);
             }
@@ -292,8 +285,8 @@ namespace Pizza_Shop
 
         private void referashcart()
         {
-         CartflowLayoutPanel.Controls.Clear();
-            foreach(DataRow row in carttable.Rows) 
+            CartflowLayoutPanel.Controls.Clear();
+            foreach (DataRow row in carttable.Rows)
             {
                 CartBlock();
             }
@@ -302,18 +295,16 @@ namespace Pizza_Shop
         private void CartPanel()
         {
 
-           //carttable = new DataTable(); // there is already one instance for cartable
-            
             carttable.Columns.Add("PizzaID", typeof(int));
             carttable.Columns.Add("PizzaName", typeof(string));
             carttable.Columns.Add("Size", typeof(string));
             carttable.Columns.Add("Price", typeof(decimal));
             carttable.Columns.Add("Quantity", typeof(int));
             carttable.Columns.Add("TotalPrice", typeof(decimal), "Price * Quantity"); // Auto-calculated column
-           
+
         }
-    
-   
+
+
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -322,7 +313,7 @@ namespace Pizza_Shop
             DialogResult result = MessageBox.Show(
                 "Do you want to add this pizza to the cart?",
                 "Add to Cart",
-                MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -331,35 +322,35 @@ namespace Pizza_Shop
 
                 // Fetch pizza details from DataTable
                 DataRow[] pizzaRows = pizzatb.Select($"pizza_id = {pizzaId}");
-                 if (pizzaRows.Length > 0 )
-                 {
+                if (pizzaRows.Length > 0)
+                {
                     DataRow row = pizzaRows[0];
 
                     // Check if the item already exists in the cart
                     DataRow[] cartrow = carttable.Select($"PizzaID = {pizzaId}");
-                    if(cartrow.Length > 0 )
+                    if (cartrow.Length > 0)
                     {
                         // Update the quantity and total price
-                        cartrow[0]["Quantity"] = Convert.ToInt32(cartrow[0]["Quantity"])+1;
+                        cartrow[0]["Quantity"] = Convert.ToInt32(cartrow[0]["Quantity"]) + 1;
 
                     }
                     else
                     {
                         // Add a new row to the cart
                         carttable.Rows.Add(
-                         
+
                             pizzaId,
                             row["pizza_name"],
                             row["pizza_size"],
                             Convert.ToDecimal(row["price"]),
                             1   //this the defualt quantity
-                            
+
                         );
                     }
 
                     referashcart();
-                 }
-                
+                }
+
             }
         }
         private void btnremove_Click(object sender, EventArgs e)
@@ -459,7 +450,7 @@ namespace Pizza_Shop
 
         private void btnRemove_Click_1(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you cannot change it again","Order Cancelled",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Are you sure you cannot change it again", "Order Cancelled", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 string orderstatus = dataGridView1.SelectedRows[0].Cells["OrderStatus"].Value.ToString();
