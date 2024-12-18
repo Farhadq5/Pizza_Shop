@@ -12,7 +12,8 @@ namespace DataAccess
        private readonly string ConnectionString;
         public ConnectionToSql()
         {
-            ConnectionString = "your connection string; ";
+            ConnectionString = "your connection string";
+
 
         }
 

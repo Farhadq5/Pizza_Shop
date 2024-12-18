@@ -288,9 +288,8 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.IntegralHeight = false;
             this.comboBox2.Items.AddRange(new object[] {
-            "manneger",
-            "",
-            "Delevery worker"});
+            "Manager",
+            "Delivery Worker"});
             this.comboBox2.Location = new System.Drawing.Point(14, 71);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox2.Name = "comboBox2";

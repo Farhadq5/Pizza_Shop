@@ -62,29 +62,87 @@ namespace Pizza_Shop
         {
             try
             {
-                int roleid = 0;
+                // Retrieve and validate username and password
                 string username = txtusername.Text.Trim();
                 string password = txtpass.Text.Trim();
-                if (comboBox2.Text == "manneger")
+
+                if (string.IsNullOrEmpty(username))
+                {
+                    MessageBox.Show("Username cannot be empty. Please enter a valid username.",
+                                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(password))
+                {
+                    MessageBox.Show("Password cannot be empty. Please enter a valid password.",
+                                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (password.Length < 6)
+                {
+                    MessageBox.Show("Password must be at least 6 characters long.",
+                                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Determine role ID based on selection
+                int roleid = 0;
+                if (comboBox2.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please select a role from the dropdown.",
+                                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else if (comboBox2.SelectedItem.ToString() == "Manager")
                 {
                     roleid = 1;
                 }
-                else if (comboBox2.Text == "Delevery worker")
+                else if (comboBox2.SelectedItem.ToString() == "Delivery Worker")
                 {
                     roleid = 3;
                 }
-                int userid2 = 4;
+                else
+                {
+                    MessageBox.Show("Invalid role selected. Please choose a valid role.",
+                                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                userService.adminadduser(username, password, roleid, userid2);
-                cleartextboxes();
-                datatable();
+                // Hardcoded admin ID for now
+                int adminId = 4;
+
+                // Call the user creation method
+                int result = userService.adminadduser(username, password, roleid, adminId);
+
+                // Handle the result
+                if (result > 0)
+                {
+                    MessageBox.Show("User added successfully!",
+                                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cleartextboxes();
+                    datatable();
+                }
+                else if (result == -1)
+                {
+                    MessageBox.Show("Username already exists. Please try a different username.",
+                                    "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add user. Please try again.",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show($"An error occurred: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
         private void cleartextboxes()
         {

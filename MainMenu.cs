@@ -116,6 +116,7 @@ namespace Pizza_Shop
                 case 4:
                     lblfname.Text = "Admin";
                     lblposition.Text = "Admin";
+                    btnsetting.Visible = false;
                     break;
                 case 3:
                     //for delevery menu

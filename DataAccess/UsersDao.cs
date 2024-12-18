@@ -16,53 +16,55 @@ namespace DataAccess
         #region user creation admin and customer
         public int CreateUser(string username, string password)
         {
-            const int roleId = 5;
-            int userId = 0;
-            if (UsernameExists(username))
-            {
-                throw new InvalidOperationException("Username already exists. Please try a new username.");
-            }
-            else
-            {
-                using (var connection = GetConnection())
+                const int roleId = 5;
+                int userId = 0;
+                if (UsernameExists(username))
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        command.Connection = connection;
-
-                        // Insert the user and retrieve the generated user_id using OUTPUT INSERTED
-                        command.CommandText = "INSERT INTO Users (username, password_hash, role_id) " +
-                                              "OUTPUT INSERTED.user_id " +
-                                              "VALUES (@username, @password, @roleId)";
-
-
-                        // Add parameters for the SQL query
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@password", password);  // Store the hashed password
-                        command.Parameters.AddWithValue("@roleId", roleId);
-
-                        // Execute the SQL command and get the generated user_id
-                        userId = (int)command.ExecuteScalar();
-                    }
+                    throw new InvalidOperationException("Username already exists. Please try a new username.");
                 }
-                
+                else
+                {
+                    using (var connection = GetConnection())
+                    {
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = connection;
 
-                // Return the generated user_id
-                return userId;
-            }
+                            // Insert the user and retrieve the generated user_id using OUTPUT INSERTED
+                            command.CommandText = "INSERT INTO Users (username, password_hash, role_id) " +
+                                                  "OUTPUT INSERTED.user_id " +
+                                                  "VALUES (@username, @password, @roleId)";
+
+
+                            // Add parameters for the SQL query
+                            command.Parameters.AddWithValue("@username", username);
+                            command.Parameters.AddWithValue("@password", password);  // Store the hashed password
+                            command.Parameters.AddWithValue("@roleId", roleId);
+
+                            // Execute the SQL command and get the generated user_id
+                            userId = (int)command.ExecuteScalar();
+                        }
+                    }
+
+
+                    // Return the generated user_id
+                    return userId;
+                }         
         }
 
         public int CreateUser(string username, string password, int roleId, int creator)
         {
-                int userId = 0;
+            int userId = 0;
+
+            // Check if the username already exists
             if (UsernameExists(username))
             {
-                MessageBox.Show("Username already exists. Please try a new username.");
-                throw new InvalidOperationException("Username already exists. Please try a new username.");
+                return -1;
             }
             else
             {
+
                 using (var connection = GetConnection())
                 {
                     connection.Open();
@@ -70,19 +72,15 @@ namespace DataAccess
                     {
                         command.Connection = connection;
 
-                        // Insert the user and retrieve the generated user_id using OUTPUT INSERTED
                         command.CommandText = "INSERT INTO Users (username, password_hash, role_id, created_by) " +
                                               "OUTPUT INSERTED.user_id " +
                                               "VALUES (@username, @password, @roleId, @creator)";
 
-
-                        // Add parameters for the SQL query
                         command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@password", password);  // Store the hashed password
+                        command.Parameters.AddWithValue("@password", password);
                         command.Parameters.AddWithValue("@roleId", roleId);
                         command.Parameters.AddWithValue("@creator", creator);
 
-                        // Execute the SQL command and get the generated user_id
                         userId = (int)command.ExecuteScalar();
                     }
                 }
@@ -90,8 +88,8 @@ namespace DataAccess
                 // Return the generated user_id
                 return userId;
             }
-           
         }
+
         #endregion
 
         #region data table here shows the users to the admin data grid view

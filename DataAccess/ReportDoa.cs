@@ -7,7 +7,7 @@ namespace DataAccess
 {
     public class ReportDoa : ConnectionToSql
     {
-        private const string NEWCON = "ypur connection string;Initial Catalog=master";
+        private const string NEWCON = "your connection string ;Initial Catalog=master";
 
         public DataTable showallreport()
         {

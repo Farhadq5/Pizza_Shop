@@ -46,29 +46,51 @@ namespace Pizza_Shop
             string City = txtcity.Text.Trim();
             string Birthdate = dateTimePicker1.Text.Trim();
 
-            if(string.IsNullOrEmpty(Firstname)||string.IsNullOrEmpty(Lastname)||string.IsNullOrEmpty(Email)|| string.IsNullOrEmpty(Birthdate)) 
+            // Check if required fields are filled
+            if (string.IsNullOrEmpty(Firstname) || string.IsNullOrEmpty(Lastname) ||
+                string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Birthdate))
             {
-                MessageBox.Show("please fill all customer info");
+                MessageBox.Show("Please fill all customer info", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate phone number
+            if (Phone.Length < 11 || !Phone.All(char.IsDigit))
+            {
+                MessageBox.Show("Phone number must be at least 11 digits and contain only numbers.",
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate email format
+            if (!Email.Contains("@") || !Email.Contains("."))
+            {
+                MessageBox.Show("Please enter a valid email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
+                // Assuming Username and userId are properly set before this call
                 int userrole = userService.userrole(Username);
 
+                // Create customer
                 customerService.CreateCustomer(userId, Firstname, Lastname, Email, Phone, City, Birthdate, loyalty);
-                MessageBox.Show(Firstname + "your information successfuly saved");
-                MainMenu mainmenu = new MainMenu(userId,userrole);
+
+                // Success message and redirect to Main Menu
+                MessageBox.Show($"{Firstname}, your information has been successfully saved.",
+                                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MainMenu mainmenu = new MainMenu(userId, userrole);
                 mainmenu.Show();
                 this.Hide();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show($"An error occurred while saving the customer information: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
+
 
     }
 }
